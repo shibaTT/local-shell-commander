@@ -12,6 +12,6 @@ export async function GET(request, response) {
 
     // return NextResponse.json(result, { status: 200 });
 
-    await execa("startpal");
+    await execa("sudo", ["systemctl", "start", "palworld"]);
     return response.status(200);
 }
