@@ -15,11 +15,11 @@ type CARD_PARAMS = {
 export function HomeCards() {
     const postPalworldApi = async (params) => {
         const commandToast = toast.loading("コマンド送信中");
+        console.log(params);
 
         await fetch("/api/commands/palworld", params)
             .then((response) => response.json())
-            .then((data) => {
-                console.log(data);
+            .then((body) => {
                 toast.update(commandToast, {
                     render: "コマンド送信に成功しました！",
                     type: "success",
@@ -27,8 +27,8 @@ export function HomeCards() {
                     autoClose: 5000,
                 });
             })
-            .catch((err) => {
-                console.error(err);
+            .catch((error) => {
+                console.error(error);
                 toast.update(commandToast, {
                     render: "何かしらのエラーが発生しました",
                     type: "error",
@@ -41,10 +41,10 @@ export function HomeCards() {
     const handleClickStartPalworld = () => {
         const params = {
             method: "POST",
-            headers: "application/json",
-            body: {
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
                 type: "start",
-            },
+            }),
         };
 
         postPalworldApi(params);
@@ -53,10 +53,10 @@ export function HomeCards() {
     const handleClickStopPalworld = () => {
         const params = {
             method: "POST",
-            headers: "application/json",
-            body: {
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
                 type: "stop",
-            },
+            }),
         };
 
         postPalworldApi(params);
@@ -65,10 +65,10 @@ export function HomeCards() {
     const handleClickRestartPalworld = () => {
         const params = {
             method: "POST",
-            headers: "application/json",
-            body: {
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
                 type: "restart",
-            },
+            }),
         };
 
         postPalworldApi(params);
