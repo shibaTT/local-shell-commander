@@ -8,7 +8,23 @@ export default function Home() {
     const [raspVolts, setRaspVolts] = useState("0V");
     const [raspClock, setRaspClock] = useState("0Mhz");
 
-    useEffect(() => {});
+    useEffect(() => {
+        const fetchStatus = async () => {
+            await fetch("/api/commands/raspberry")
+                .then((response) => response.json())
+                .then((body) => {
+                    setRaspTemp(body.temp);
+                    setRaspVolts(body.volts);
+                    setRaspClock(body.clock);
+                })
+                .catch(() => {
+                    console.error("エラーが発生しました");
+                });
+        };
+
+        fetchStatus();
+    }, []);
+
     return (
         <Content className="flex flex-col flex-1 w-0 overflow-hidden h-screen">
             <div className="relative items-center w-full px-3 py-6">
