@@ -49,17 +49,17 @@ export async function POST(request, response) {
     // シェルコマンド送り込むのは面倒なのでエイリアスを投げる（動かなかったらちゃんとやる）
     switch (body.type) {
         case "start":
-            await execa("startpal");
+            await execa("sudo", ["systemctl", "start", "palworld"]);
             break;
         case "end":
-            await execa("stoppal");
+            await execa("sudo", ["systemctl", "stop", "palworld"]);
             break;
         case "restart":
-            await execa("stoppal");
+            await execa("sudo", ["systemctl", "stop", "palworld"]);
             // 再起動待ちのために10秒スリープ（自作関数）
             // いいやり方があればそれに移行
             await sleep(10);
-            await execa("startpal");
+            await execa("sudo", ["systemctl", "start", "palworld"]);
             break;
         default:
             returnError("type mismatch");
