@@ -17,7 +17,7 @@ export function Card({ item }) {
                 <div className="mt-6">
                     <div
                         onClick={() => item.action()}
-                        className="flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        className="flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-xl cursor-pointer hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     >
                         Run
                     </div>
@@ -44,8 +44,7 @@ export function Card({ item }) {
                         </h4>
 
                         <p className="mt-3 text-base leading-relaxed text-gray-500 whitespace-pre-wrap">
-                            {Object.hasOwn(item, "description") &&
-                                item.description}
+                            {Object.hasOwn(item, "description") && item.description}
                         </p>
 
                         {hasAction()}
