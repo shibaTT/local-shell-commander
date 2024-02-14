@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## What is this
 
-## Getting Started
+自宅にラズパイを導入したのでウキウキで作った、Linux 知らない人でも簡単にシェルコマンドを叩ける便利なサイトです
 
-First, run the development server:
+コマンド自体は自宅に特化したものです
 
-```bash
+家の外から接続させる予定はないので、localhost で運用する前提でセキュリティに関しては何もしてません
+
+フォークすれば API の部分とデザインの部分をいい感じにあなたの環境用にいじれるかも！？知らんけど
+
+## 起動
+
+```sh
 npm run dev
-# or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+これでいい
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+自宅以外で使いたいなら package.json いじって Production ビルドでサーバー立てれるようにしてください
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## 使用してるフレームワークとか
 
-## Learn More
+技術スタックと言うのかわかんねぇ〜
 
-To learn more about Next.js, take a look at the following resources:
+-   Next.js v14 (App Router)
+-   Tailwind
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 実装についての雑記
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+ネットの海を漂っていたら [Execa](https://github.com/sindresorhus/execa) という child_process を楽にしてくれるパッケージ（モジュール）（ライブラリ）を見つけたので
+これええやん！と思って採用しました
 
-## Deploy on Vercel
+そもそも child_process ってなんやねんって状態なんですけど、child_process ってなんやねん
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+よくわかんないですが、Node.js のおかげでパソコン自体にシェルコマンド送れるのやばすぎん？
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Web サイト作ってるだけなのに…………
+
+あとは Tailwind は普通にネットサーフィンしてたらどのデザインテンプレートもバカみたいに Tailwind 使ってて気を悪くしたので採用しました
