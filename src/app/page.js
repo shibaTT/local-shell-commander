@@ -2,26 +2,30 @@
 import { HomeCards } from "@/components/parts/HomeCards";
 import { Content } from "@/components/parts/Content";
 import { useEffect, useState } from "react";
+import converter from "@/utils/convertIntDec";
 
 export default function Home() {
     const [raspTemp, setRaspTemp] = useState("0'C");
     const [raspVolts, setRaspVolts] = useState("0V");
     const [raspClock, setRaspClock] = useState("0Mhz");
 
-    useEffect(() => {
-        const fetchStatus = async () => {
-            await fetch("/api/commands/raspberry")
-                .then((response) => response.json())
-                .then((body) => {
-                    setRaspTemp(body.temp);
-                    setRaspVolts(body.volts);
-                    setRaspClock(body.clock);
-                })
-                .catch(() => {
-                    console.error("エラーが発生しました");
-                });
-        };
+    const fetchStatus = async () => {
+        await fetch("/api/commands/raspberry")
+            .then((response) => response.json())
+            .then((body) => {
+                const formatTemp = converter(body.temp) + "℃";
+                const formatVolts = converter(body.volts) + "V";
+                const formatClock = Number.parseFloat(converter(body.clock)) / 10 ** 9 + "Ghz";
+                setRaspTemp(formatTemp);
+                setRaspVolts(formatVolts);
+                setRaspClock(formatClock);
+            })
+            .catch(() => {
+                console.error("エラーが発生しました");
+            });
+    };
 
+    useEffect(() => {
         fetchStatus();
     }, []);
 
@@ -29,12 +33,17 @@ export default function Home() {
         <Content className="flex flex-col flex-1 w-0 overflow-hidden h-screen">
             <div className="relative items-center w-full px-3 py-6">
                 <div className="w-full mx-auto p-6 bg-white shadow-xl rounded-xl">
-                    <p className="text-2xl font-semibold leading-none tracking-tighter text-neutral-600 lg:text-3xl whitespace-pre-wrap">
-                        ラズペリーバイの状況
-                        <span className="ml-4 text-xs font-semibold tracking-widest text-blue-600 uppercase">
-                            Status
-                        </span>
-                    </p>
+                    <div className="flex justify-between">
+                        <p className="text-2xl font-semibold leading-none tracking-tighter text-neutral-600 lg:text-3xl whitespace-pre-wrap">
+                            ラズペリーバイの状況
+                            <span className="ml-4 text-xs font-semibold tracking-widest text-blue-600 uppercase">
+                                Status
+                            </span>
+                        </p>
+                        <p onClick={fetchStatus} className="text-gray-500 font-semibold">
+                            再読み込み
+                        </p>
+                    </div>
 
                     <section className="grid max-w-lg mt-5 gap-5 mx-auto divide-x lg:grid-cols-3 lg:max-w-none">
                         <div className="relative items-center w-full px-3 py-6 max-w-7xl">
