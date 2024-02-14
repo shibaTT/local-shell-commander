@@ -11,14 +11,11 @@ export async function GET() {
         () => null
     );
 
-    const raspberryPiStatus = { temp, volts, clock };
+    const raspberryPiStatus = {
+        temp: temp ? temp.stdout : "0'C",
+        volts: volts ? volts.stdout : "0V",
+        clock: clock ? clock.stdout : "0Mhz",
+    };
 
-    if (Object.keys(raspberryPiStatus).length > 0) {
-        return NextResponse.json(raspberryPiStatus, { status: 200 });
-    } else {
-        return NextResponse.json(
-            { error: "データが取得できませんでした" },
-            { status: 500 }
-        );
-    }
+    return NextResponse.json(raspberryPiStatus, { status: 200 });
 }
