@@ -1,4 +1,6 @@
 import { Card } from "@/components/elements/Card";
+import { toast } from "react-toastify";
+import sleep from "@/utils/sleep";
 
 /*
 type CARD_PARAMS = {
@@ -11,11 +13,29 @@ type CARD_PARAMS = {
 */
 
 export function HomeCards() {
-    const sendPalworldApi = async (params) => {
+    const postPalworldApi = async (params) => {
+        const commandToast = toast.loading("コマンド送信中");
+
         await fetch("/api/commands/palworld", params)
             .then((response) => response.json())
-            .then((data) => console.log(data))
-            .catch(() => console.error("パルワールドサーバー開始/終了エラー"));
+            .then((data) => {
+                console.log(data);
+                toast.update(commandToast, {
+                    render: "コマンド送信に成功しました！",
+                    type: "success",
+                    isLoading: false,
+                    autoClose: 5000,
+                });
+            })
+            .catch(() => {
+                console.error("パルワールドサーバー開始/終了エラー");
+                toast.update(commandToast, {
+                    render: "何かしらのエラーが発生しました",
+                    type: "error",
+                    isLoading: false,
+                    autoClose: 5000,
+                });
+            });
     };
 
     const handleClickStartPalworld = () => {
@@ -27,7 +47,7 @@ export function HomeCards() {
             },
         };
 
-        sendPalworldApi(params);
+        postPalworldApi(params);
     };
 
     const handleClickStopPalworld = () => {
@@ -39,7 +59,7 @@ export function HomeCards() {
             },
         };
 
-        sendPalworldApi(params);
+        postPalworldApi(params);
     };
 
     const handleClickRestartPalworld = () => {
@@ -51,7 +71,7 @@ export function HomeCards() {
             },
         };
 
-        sendPalworldApi(params);
+        postPalworldApi(params);
     };
 
     const cardsParams = [
