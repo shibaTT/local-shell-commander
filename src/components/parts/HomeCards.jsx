@@ -27,8 +27,8 @@ export function HomeCards() {
                     autoClose: 5000,
                 });
             })
-            .catch(() => {
-                console.error("パルワールドサーバー開始/終了エラー");
+            .catch((err) => {
+                console.error(err);
                 toast.update(commandToast, {
                     render: "何かしらのエラーが発生しました",
                     type: "error",
