@@ -16,24 +16,6 @@ export async function GET() {
     } else {
         return NextResponse.json({ running: false }, { status: 200 });
     }
-
-    // Gemini先生に聞いてみると `./palworld.sh status`をすると情報をくれるという話
-    // 本当かどうかはわからないが、いろんな情報をもらえるらしいので以下に示す
-
-    // Server Name: My Server
-    // Port: 8211
-    // Map: Desert
-    // Max Players: 10
-    // Current Players: 2
-    // Uptime: 1 hour 23 minutes
-    // CPU Usage: 50%
-    // Memory Usage: 2 GB
-    // FPS: 60
-    // Ping: 30 ms
-
-    // Players:
-    // - Player1
-    // - Player2
 }
 
 export async function POST(request, response) {
@@ -46,7 +28,6 @@ export async function POST(request, response) {
     };
 
     // POSTのtypeによってコマンドを変える
-    // シェルコマンド送り込むのは面倒なのでエイリアスを投げる（動かなかったらちゃんとやる）
     switch (body.type) {
         case "start":
             await execa("sudo", ["systemctl", "start", "palworld"]);
@@ -58,6 +39,7 @@ export async function POST(request, response) {
             await execa("sudo", ["systemctl", "stop", "palworld"]);
             // 再起動待ちのために10秒スリープ（自作関数）
             // いいやり方があればそれに移行
+            // てか思ったけどawaitなんだしスリープする必要ある？
             await sleep(10);
             await execa("sudo", ["systemctl", "start", "palworld"]);
             break;
