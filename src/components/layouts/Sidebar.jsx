@@ -6,7 +6,7 @@ export function Sidebar() {
     return (
         <aside className="hidden md:flex md:flex-shrink-0">
             <div className="flex flex-col w-64">
-                <div className="flex flex-col flex-grow pt-5 overflow-y-auto border-r bg-neutral-800 h-screen">
+                <div className="flex flex-col flex-grow pt-5 overflow-y-auto bg-neutral-800 h-screen">
                     <div className="flex flex-col items-center flex-shrink-0 px-4 sticky top-0">
                         <a
                             className="px-8 text-left focus:outline-none"
