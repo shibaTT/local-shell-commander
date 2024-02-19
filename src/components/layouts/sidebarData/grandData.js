@@ -19,13 +19,8 @@ export const grandData = [
         link: "/",
     },
     {
-        title: "SecondHome",
+        title: "パルワールド",
         icon: <HomeIcon />,
-        link: "/",
-    },
-    {
-        title: "日本語のホーム",
-        icon: <HomeIcon />,
-        link: "/",
+        link: "/palworld",
     },
 ];
