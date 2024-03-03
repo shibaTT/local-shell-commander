@@ -23,4 +23,9 @@ export const grandData = [
         icon: <HomeIcon />,
         link: "/palworld",
     },
+    {
+        title: "Switchbot",
+        icon: <HomeIcon />,
+        link: "/switchbot",
+    },
 ];
