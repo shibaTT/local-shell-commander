@@ -9,10 +9,15 @@ export async function GET() {
     // ポート番号 "8211" が空いているか確認
 
     // await抜いててちゃんと動かなかった！気をつけろ！
-    const checkPortResult = await execa("sudo", ["lsof", "-i", ":8211"]).catch(() => "");
+    const checkPortResult = await execa("sudo", ["lsof", "-i", ":8211"]).catch(
+        () => ""
+    );
 
     if (checkPortResult != "") {
-        return NextResponse.json({ running: true, text: checkPortResult.stdout }, { status: 200 });
+        return NextResponse.json(
+            { running: true, text: checkPortResult.stdout },
+            { status: 200 }
+        );
     } else {
         return NextResponse.json({ running: false }, { status: 200 });
     }
@@ -48,5 +53,5 @@ export async function POST(request, response) {
             break;
     }
 
-    return NextResponse({ process: "ok" }, { status: 500 });
+    return NextResponse.json({ process: "ok" }, { status: 500 });
 }
