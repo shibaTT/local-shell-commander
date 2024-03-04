@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 
 const CONTROL = {
     shutter_up: "shutter_up",
+    shutter_down: "shutter_down",
 };
 
 export function SwitchbotCards() {
@@ -50,6 +51,38 @@ export function SwitchbotCards() {
 
                 toast.update(toastId, {
                     render: "シャッターを開きました",
+                    type: "success",
+                    isLoading: false,
+                    autoClose: 5000,
+                });
+            })
+            .catch((error) => {
+                console.dir(error);
+                toast.update(toastId, {
+                    render: error.message,
+                    type: "error",
+                    isLoading: false,
+                    autoClose: 5000,
+                });
+            });
+    };
+
+    const postShutterDown = async () => {
+        const toastId = toast.loading("読み込み中");
+        await fetch("/api/switchbot/devices", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                type: CONTROL.shutter_down,
+            }),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("シャッターを閉じられませんでした");
+                }
+
+                toast.update(toastId, {
+                    render: "シャッターを閉じました",
                     type: "success",
                     isLoading: false,
                     autoClose: 5000,
@@ -151,7 +184,10 @@ export function SwitchbotCards() {
                     </p>
 
                     <div className="mt-6">
-                        <div className="flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-xl cursor-pointer hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        <div
+                            onClick={postShutterDown}
+                            className="flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-xl cursor-pointer hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        >
                             Run
                         </div>
                     </div>

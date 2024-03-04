@@ -93,10 +93,11 @@ export async function POST(request, response) {
             );
             return shutterUpResponse;
         case "shuter_down":
+            // TODO: 寝室照明用のアクションも設定する
             const shutterDownUrl =
                 BASE_URL +
                 "/v1.1/devices/" +
-                process.env.SWITCHBOT_SHUTTER_UP +
+                process.env.SWITCHBOT_SHUTTER_DOWN +
                 "/commands";
             const shutterDownParams = {
                 command: "press",
