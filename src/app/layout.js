@@ -8,8 +8,9 @@ import "react-toastify/dist/ReactToastify.min.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-    title: "Home Management System",
-    description: "Management Home something. Security, Tools, Server, support your life.",
+    title: "Homasys",
+    description:
+        "Management Home something. Security, Tools, Server, support your life.",
 };
 
 export default function RootLayout({ children }) {
