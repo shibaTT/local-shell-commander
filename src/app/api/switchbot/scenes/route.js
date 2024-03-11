@@ -16,7 +16,6 @@ const sign = HmacSHA256(data, process.env.SWITCHBOT_SECRET).toString(
 
 export async function GET(request, response) {
     // GETの場合はシーンリストの取得
-
     const url = BASE_URL + "/v1.1/scenes";
 
     try {
@@ -47,6 +46,7 @@ export async function POST(request, response) {
     // POSTの場合はシーンの実行
     const requestData = await request.json();
     const url = BASE_URL + "/v1.1/scenes" + requestData.sceneId + "/execute";
+
     try {
         const response = await fetch(url, {
             method: "POST",
@@ -63,9 +63,9 @@ export async function POST(request, response) {
         if (response.status !== 100 && response.status !== 200) {
             throw new Error(data.message);
         }
+
+        return NextResponse.json({ message: "ok" }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ message: error }, { status: 500 });
     }
-
-    return NextResponse.json({ message: "ok" }, { status: 200 });
 }
