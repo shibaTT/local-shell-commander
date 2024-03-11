@@ -1,15 +1,8 @@
-"use client";
 import { Card, SkeletonCard } from "@/components/elements/Card";
 import { toast } from "react-toastify";
-import { Suspense, useState, useEffect } from "react";
+import { Suspense } from "react";
 
-export function SwitchbotCards() {
-    const [sceneList, setSceneList] = useState([]);
-
-    useEffect(() => {
-        getSceneList();
-    }, []);
-
+export function SwitchbotCards({ sceneList }) {
     const getDeviceList = async () => {
         const toastId = toast.loading("読み込み中");
 
@@ -50,7 +43,43 @@ export function SwitchbotCards() {
             })
             .then((body) => {
                 console.log(body);
-                setSceneList(body);
+            });
+    };
+
+    const executeScene = async (sceneId) => {
+        const toastId = toast.loading("実行中…");
+        await fetch("/api/switchbot/scenes", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: {
+                sceneId,
+            },
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(response.statusText);
+                }
+                return response.json();
+            })
+            .then((body) => {
+                console.log(body);
+                toast.update(toastId, {
+                    render: "デバイス情報の取得に成功しました",
+                    type: "success",
+                    isLoading: false,
+                    autoClose: 5000,
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+                toast.update(toastId, {
+                    render: "デバイス情報の取得に失敗しました",
+                    type: "error",
+                    isLoading: false,
+                    autoClose: 5000,
+                });
             });
     };
 
@@ -119,7 +148,7 @@ export function SwitchbotCards() {
             </Card>
 
             <Suspense fallback={<div>読み込み失敗………</div>}>
-                {sceneList.length == 0 ? (
+                {sceneList.length === 0 ? (
                     <SkeletonCard />
                 ) : (
                     sceneList.map((item) => {
