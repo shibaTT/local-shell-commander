@@ -53,9 +53,9 @@ export function SwitchbotCards({ sceneList }) {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: {
+            body: JSON.stringify({
                 sceneId,
-            },
+            }),
         })
             .then((response) => {
                 if (!response.ok) {
@@ -66,7 +66,7 @@ export function SwitchbotCards({ sceneList }) {
             .then((body) => {
                 console.log(body);
                 toast.update(toastId, {
-                    render: "デバイス情報の取得に成功しました",
+                    render: "実行に成功しました",
                     type: "success",
                     isLoading: false,
                     autoClose: 5000,
@@ -75,7 +75,7 @@ export function SwitchbotCards({ sceneList }) {
             .catch((error) => {
                 console.error(error);
                 toast.update(toastId, {
-                    render: "デバイス情報の取得に失敗しました",
+                    render: "実行に失敗しました",
                     type: "error",
                     isLoading: false,
                     autoClose: 5000,
@@ -165,9 +165,7 @@ export function SwitchbotCards({ sceneList }) {
 
                                     <div className="mt-6">
                                         <div
-                                            onClick={() =>
-                                                executeScene(item.sceneId)
-                                            }
+                                            onClick={() => executeScene(item.sceneId)}
                                             className="flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-xl cursor-pointer hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                                         >
                                             Run

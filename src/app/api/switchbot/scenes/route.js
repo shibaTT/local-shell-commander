@@ -10,9 +10,7 @@ const BASE_URL = "https://api.switch-bot.com";
 const time = Date.now();
 const nonce = uuid();
 const data = process.env.SWITCHBOT_TOKEN + String(time) + nonce;
-const sign = HmacSHA256(data, process.env.SWITCHBOT_SECRET).toString(
-    enc.Base64
-);
+const sign = HmacSHA256(data, process.env.SWITCHBOT_SECRET).toString(enc.Base64);
 
 export async function GET(request, response) {
     // GETの場合はシーンリストの取得
@@ -45,7 +43,7 @@ export async function GET(request, response) {
 export async function POST(request, response) {
     // POSTの場合はシーンの実行
     const requestData = await request.json();
-    const url = BASE_URL + "/v1.1/scenes" + requestData.sceneId + "/execute";
+    const url = BASE_URL + "/v1.1/scenes/" + requestData.sceneId + "/execute";
 
     try {
         const response = await fetch(url, {
