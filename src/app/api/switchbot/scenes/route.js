@@ -32,9 +32,8 @@ export async function GET(request, response) {
         });
 
         const data = await response.json();
-        // console.log(data.body);
 
-        if (data.statusCode !== 100 || data.statusCode !== 200) {
+        if (response.status !== 100 && response.status !== 200) {
             throw new Error(data.message);
         }
 
@@ -61,7 +60,7 @@ export async function POST(request, response) {
         });
         const data = await response.json();
 
-        if (data.statusCode !== 100 || data.statusCode !== 200) {
+        if (response.status !== 100 && response.status !== 200) {
             throw new Error(data.message);
         }
     } catch (error) {
